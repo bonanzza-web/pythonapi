@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-        KUBERNETES_SERVER = 'http://192.168.0.88:16443'
+        KUBERNETES_SERVER = 'https://192.168.0.88:16443'
         K8S_TOKEN = credentials('microk8s')
     }
          stages {
