@@ -2,4 +2,4 @@ import os
 
 print("This is test")
 
-print(os.getenv())
+print(os.getenv("USER"))
