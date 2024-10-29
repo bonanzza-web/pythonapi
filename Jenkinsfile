@@ -29,6 +29,11 @@ pipeline {
                     '''
                 }
             }
+            stage('Test test') {
+              steps {
+                sh 'python test.py'
+              }
+            }
         }
          }
         
