@@ -1,0 +1,8 @@
+---
+- name: Create namespace
+  hosts: all
+  remote_user: quehoras
+
+  tasks:
+  - name: Create namespace test
+    ansible.builtin.shell: kubectl create ns test
