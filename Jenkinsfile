@@ -41,6 +41,7 @@ pipeline {
 
                     # Пример команды для развертывания
                     kubectl get po -A
+                    kubectl get svc -A
                     '''
                 }
             }
