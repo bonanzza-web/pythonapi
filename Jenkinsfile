@@ -65,9 +65,7 @@ pipeline {
                     kubectl config set-context jenkins-context --cluster=microk8s-cluster --user=jenkins
                     kubectl config use-context jenkins-context
 
-                    # Пример команды для развертывания
-                    kubectl get po -A
-                    kubectl get svc -A
+                    kubectl apply -f ./k8docs/*
                     '''
                 }
             }
