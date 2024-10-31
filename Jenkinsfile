@@ -44,6 +44,18 @@ pipeline {
                 }
             }
            }
+           stage ('Docker build') {
+            steps {
+              script {
+                sh '''
+                docker build ./app/service_a -t bonanzza/service_a
+                docker push bonanzza/service_a
+                docker build ./app/service_b -t bonanzza/service_b
+                docker push bonanzza/service_b
+                '''
+              }
+            }
+           }
            stage('Deploy to Kubernetes') {
             steps {
                 script {
