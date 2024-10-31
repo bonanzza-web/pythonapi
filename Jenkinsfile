@@ -30,6 +30,11 @@ pipeline {
                sh 'kubectl version --client'
              }
            }
+           stage ('Create ns with ansible') {
+             steps {
+               sh 'ansible-playbook -i ./ansible/inventory/hosts.txt ./ansible/playbook.yml' 
+           }
+        }
            stage('Deploy to Kubernetes') {
             steps {
                 script {
