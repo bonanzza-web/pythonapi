@@ -35,6 +35,15 @@ pipeline {
                sh 'ansible-playbook -i ./ansible/inventory/hosts.txt ./ansible/playbook.yml' 
            }
         }
+           stage ('Docker hub login') {
+            steps {
+              script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    }
+                }
+            }
+           }
            stage('Deploy to Kubernetes') {
             steps {
                 script {
