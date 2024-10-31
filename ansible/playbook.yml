@@ -1,8 +1,13 @@
 ---
-- name: Create namespace
+- name: Create namespace if it does not exist
   hosts: all
   remote_user: quehoras
-
   tasks:
-  - name: Create namespace test
-    ansible.builtin.shell: kubectl create ns test
+    - name: Check if namespace 'test' exists
+      ansible.builtin.shell: kubectl get ns test --no-headers
+      register: namespace_check
+      ignore_errors: true
+
+    - name: Create namespace 'test'
+      ansible.builtin.shell: kubectl create ns test
+      when: namespace_check.rc != 0
