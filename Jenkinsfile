@@ -40,7 +40,7 @@ pipeline {
                     kubectl config use-context jenkins-context
 
                     # Пример команды для развертывания
-                    kubectl get po
+                    kubectl get po -A
                     '''
                 }
             }
