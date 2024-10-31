@@ -65,7 +65,7 @@ pipeline {
                     kubectl config set-context jenkins-context --cluster=microk8s-cluster --user=jenkins
                     kubectl config use-context jenkins-context
 
-                    ls -l ./k8docs/
+                    kubectl apply -f ./k8sdocs/*
                     '''
                 }
             }
