@@ -8,7 +8,7 @@ pipeline {
            stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
-                    sh '/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarscanner/bin/bin/sonar-scanner -Dsonar.projectKey=jensonar -Dsonar.host.url=http://192.168.0.7:9000'
+                    sh '/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarscanner/bin/bin/sonar-scanner -Dsonar.projectKey=pythonapi -Dsonar.host.url=http://192.168.0.7:9000'
                 }
             }
         }
@@ -44,6 +44,18 @@ pipeline {
                 }
             }
            }
+           stage ('Docker build') {
+            steps {
+              script {
+                sh '''
+                docker build ./app/service_a -t bonanzza/service_a
+                docker push bonanzza/service_a
+                docker build ./app/service_b -t bonanzza/service_b
+                docker push bonanzza/service_b
+                '''
+              }
+            }
+           }
            stage('Deploy to Kubernetes') {
             steps {
                 script {
@@ -53,9 +65,7 @@ pipeline {
                     kubectl config set-context jenkins-context --cluster=microk8s-cluster --user=jenkins
                     kubectl config use-context jenkins-context
 
-                    # Пример команды для развертывания
-                    kubectl get po -A
-                    kubectl get svc -A
+                    kubectl apply -f ./k8sdocs/
                     '''
                 }
             }
